@@ -43,3 +43,25 @@ function Form() {
     </div>
   );
 }
+
+function PackingList() {
+  return (
+    <div className="list">
+      <ul>
+        {initialItems.map((item) => (
+          <Item item={item} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Stats() {
+  return (
+    <footer className="stats">
+      <em>🎒You have X items on your list , and you already packed X (X%)</em>
+    </footer>
+  );
+}
+
+
