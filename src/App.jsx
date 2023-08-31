@@ -4,8 +4,8 @@
 
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
-  { id: 2, description: "Charger", quantity: 12, packed: false },
+  { id: 2, description: "Socks", quantity: 12, packed: true },
+  { id: 3, description: "Charger", quantity: 12, packed: false },
 ];
 
 import React from "react";
@@ -28,8 +28,13 @@ function Logo() {
 }
 
 function Form() {
+
+  function handleSubmit (){
+     console.log("first")
+  }
+
   return (
-    <div className="add-form">
+    <div className="add-form" onSubmit={handleSubmit}> 
       <h3>What do you need for your 😍 trip? </h3>
       <select name="" id="">
       {
@@ -39,7 +44,7 @@ function Form() {
       }
       </select>
       <input type="text" placeholder="Item..." />
-      <button>Add</button>
+      <button type="submit">Add</button>
     </div>
   );
 }
@@ -49,7 +54,7 @@ function PackingList() {
     <div className="list">
       <ul>
         {initialItems.map((item) => (
-          <Item item={item} />
+          <Item item={item} key={item.id}/>
         ))}
       </ul>
     </div>
