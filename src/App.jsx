@@ -8,7 +8,7 @@ const initialItems = [
   { id: 3, description: "Charger", quantity: 12, packed: false },
 ];
 
-import React from "react";
+import React, { useState } from "react";
 
 const App = () => {
   return (
@@ -28,22 +28,44 @@ function Logo() {
 }
 
 function Form() {
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
-  function handleSubmit (){
-     console.log("first")
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if(!description) return;
+    
+    const newItem = {description,quantity,packed:false,id:Date.now()}
+    console.log(newItem)
+
+    setDescription("");
+    setQuantity(1);
+
   }
 
   return (
-    <div className="add-form" onSubmit={handleSubmit}> 
+    <div className="add-form" onClick={handleSubmit}>
       <h3>What do you need for your 😍 trip? </h3>
-      <select name="" id="">
-      {
-        Array.from({length:20},(_,i)=>i+1).map((num) => (
-          <option value={num} key={num}>{num}</option>
-        ))
-      }
+      <select 
+      value={quantity} 
+      onChange={(e) => { 
+      console.log(e.target.value)
+      setQuantity(e.target.value)}}>
+        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+          <option value={num} key={num}>
+            {num}
+          </option>
+        ))}
       </select>
-      <input type="text" placeholder="Item..." />
+      <input
+        type="text"
+        placeholder="Item..."
+        value={description}
+        onChange={(e) => {
+          console.log(e.target.value)
+          setDescription(e.target.value)}}
+      />
       <button type="submit">Add</button>
     </div>
   );
@@ -54,7 +76,7 @@ function PackingList() {
     <div className="list">
       <ul>
         {initialItems.map((item) => (
-          <Item item={item} key={item.id}/>
+          <Item item={item} key={item.id} />
         ))}
       </ul>
     </div>
@@ -68,7 +90,6 @@ function Stats() {
     </footer>
   );
 }
-
 
 function Item({ item }) {
   return (
