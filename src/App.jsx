@@ -12,14 +12,12 @@ import React, { useState } from "react";
 
 const App = () => {
   const [item, setItems] = useState([]);
-  
 
   function handleItem(item) {
     setItems((items) => [...items, item]);
   }
 
   function handleDeleteItem(id) {
-   
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
@@ -40,7 +38,7 @@ const App = () => {
         onDeleteItems={handleDeleteItem}
         onToggleItem={handleToggleItem}
       />
-      <Stats item={item}  />
+      <Stats item={item} />
     </div>
   );
 };
@@ -98,26 +96,35 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItems,onToggleItem }) {
+function PackingList({ items, onDeleteItems, onToggleItem }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Item item={item} onDeleteItems={onDeleteItems} key={item.id} onToggleItem={onToggleItem}  />
+          <Item
+            item={item}
+            onDeleteItems={onDeleteItems}
+            key={item.id}
+            onToggleItem={onToggleItem}
+          />
         ))}
       </ul>
-    </div> 
+    </div>
   );
 }
 
-function Stats({item}) {
+function Stats({ item }) {
   const numItem = item.length;
-  const numPacked = item.filter((item)=>item.packed).length
-  const percentage = Math.round((numPacked/numItem)*100)
+  const numPacked = item.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItem) * 100);
 
   return (
     <footer className="stats">
-      <em>🎒You have {numItem} items on your list , and you already packed {numPacked} ({percentage})%</em>
+      <em>
+        {percentage === 100
+          ? "You got everything! Ready to go ✈️"
+          : `🎒You have ${numItem} items on your list, and your already packed ${numPacked} (${percentage})%`}
+      </em>
     </footer>
   );
 }
